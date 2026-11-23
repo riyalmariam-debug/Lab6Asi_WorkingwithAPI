@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A waterfront scene shaped by live weather data. A public API experiment by Mariam Riyal.">
+<title>Here, Now | Live Waterfront Weather</title>
+<style>
+:root{--ink:#203b34;--muted:#526d64;--paper:#f2f5ee;--line:#cbd7ca;--gold:#8c6d3e}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:1rem/1.6 system-ui,-apple-system,sans-serif}button,select{font:inherit;color:inherit}button{cursor:pointer}a{color:inherit}header{max-width:1280px;margin:auto;padding:24px 5%;display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line)}.brand{font:1.5rem Georgia,serif;text-decoration:none}.meta{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);align-self:center}main{max-width:1280px;margin:auto;padding:48px 5% 32px}.intro{display:grid;grid-template-columns:1.2fr 1fr;align-items:end;gap:40px;margin-bottom:36px}.eyebrow{font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;margin:0 0 12px;color:var(--muted)}h1{font:clamp(3.8rem,8vw,7rem)/.94 Georgia,serif;letter-spacing:-.055em;margin:0}h1 em{font-weight:normal;color:var(--gold)}.intro-copy{max-width:360px;justify-self:end}.intro-copy p{margin:0;font-size:1.1rem}.intro-copy small{display:block;color:var(--muted);font-size:.85rem;margin-top:14px}.toolbar{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:20px;margin-bottom:20px}.location-picker label{display:block;font-size:.85rem;margin-bottom:7px}select{appearance:none;border:1px solid #9daf9e;border-radius:4px;padding:11px 42px 11px 14px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23203b34' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 15px center;min-width:210px}.controls{display:flex;gap:8px;flex-wrap:wrap}button{border:1px solid #9daf9e;background:transparent;border-radius:4px;padding:11px 15px}.primary{background:var(--ink);color:#fff;border-color:var(--ink)}button:hover:not(:disabled){filter:brightness(.93)}button:disabled{cursor:wait;opacity:.6}:focus-visible{outline:3px solid #af833f;outline-offset:4px}.experience{display:grid;grid-template-columns:1.9fr 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}.scene{position:relative;min-width:0;min-height:430px;--sky:#ccd7d9;--lake:#678b94;--cloud:#c0cdd0;--shore:#6b846e;--speed:5s;background:var(--sky)}.scene svg{width:100%;height:100%;min-height:430px;display:block;position:absolute;inset:0}.sky{fill:var(--sky);transition:fill 1s}.lake{fill:var(--lake);transition:fill 1s}.shore{fill:var(--shore)}.clouds{fill:var(--cloud);opacity:.6;animation:cloud-drift 16s ease-in-out infinite alternate}.cloud-two{opacity:.4}.sun{fill:#f0d29a;opacity:0}.moon{fill:#f4eacb;opacity:0}.waves{animation:ripple var(--speed) ease-in-out infinite alternate;stroke:#deeee3;opacity:.6}.stars,.rain,.snow,.fog{display:none}.scene[data-weather=clear]{--sky:#bcdde0;--lake:#5b929c;--cloud:#fff}.scene[data-weather=clear] .sun{opacity:1}.scene[data-weather=clear] .clouds{opacity:.2}.scene[data-weather=cloudy]{--sky:#b8cbd0;--lake:#668590;--cloud:#edf2ed}.scene[data-weather=rain],.scene[data-weather=storm]{--sky:#879ba6;--lake:#4a6c7c;--cloud:#627c89}.scene[data-weather=rain] .rain,.scene[data-weather=storm] .rain{display:block}.scene[data-weather=snow]{--sky:#c4cfd8;--lake:#718d9e;--cloud:#e5ecee;--shore:#d2dccc}.scene[data-weather=snow] .snow{display:block}.scene[data-weather=fog]{--sky:#c9d4d1;--lake:#91a6a3}.scene[data-weather=fog] .fog{display:block}.scene[data-day=night]{--sky:#233949;--lake:#284a5b;--cloud:#657782;--shore:#455c52}.scene[data-day=night] .sun{opacity:0}.scene[data-day=night] .moon{opacity:1}.scene[data-day=night] .stars{display:block}.scene[data-day=night] .window{fill:#f1d79f}.rain{stroke:#dfedf0;stroke-width:2;opacity:.7;animation:rainfall .8s linear infinite}.snow{fill:white;animation:snowfall 4s linear infinite}.fog{fill:#ecf0e9;opacity:.4}.scene.paused *{animation-play-state:paused!important}.scene-label{position:absolute;left:22px;bottom:18px;color:white;background:#203b34cc;padding:7px 12px;font-size:.8rem;border-radius:3px}.weather-panel{padding:28px;display:flex;flex-direction:column;justify-content:center}#placeName{font:1.75rem Georgia,serif;margin:0}#temperature{font:4.5rem/1.1 Georgia,serif;margin:15px 0 5px;letter-spacing:-.04em}#condition{margin:0 0 18px;font-size:1.1rem}dl{margin:0}dl>div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:.9rem}dt{color:var(--muted)}dd{margin:0;font-weight:600}.times{font-size:.8rem;color:var(--muted);margin:20px 0 0;line-height:1.8}.status-row{display:flex;align-items:start;gap:14px;margin:18px 0 28px}#badge{font-size:.8rem;padding:4px 10px;border:1px solid #9eb29a;border-radius:3px;white-space:nowrap}#status{font-size:.9rem;color:var(--muted);margin:2px 0}#badge[data-state=error]{border-color:#a66c4d;color:#86472d}.explanation{border-top:1px solid var(--line);padding-top:25px;display:grid;grid-template-columns:1fr 1fr;gap:40px}.explanation h2{font:1.6rem Georgia,serif;margin:0 0 12px}.explanation p{font-size:.95rem;margin:0;color:var(--muted)}details{margin-top:28px;border-top:1px solid var(--line);padding-top:18px}summary{cursor:pointer}pre{background:#e4ece0;padding:18px;overflow:auto;font-size:.8rem;max-height:300px}footer{max-width:1280px;margin:auto;padding:25px 5%;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)}footer p{margin:4px 0}.scene[data-ready=false] svg{opacity:.5} @keyframes ripple{to{transform:translateX(25px)}}@keyframes cloud-drift{to{transform:translateX(25px)}}@keyframes rainfall{to{transform:translate(-9px,25px)}}@keyframes snowfall{to{transform:translate(12px,35px)}}@media(max-width:800px){main{padding-top:32px}.experience{grid-template-columns:1fr}.scene,.scene svg{min-height:340px}.weather-panel{padding:24px}#temperature{font-size:3.7rem}.intro{gap:25px}.intro-copy p{font-size:1rem}.meta{font-size:.75rem}}@media(max-width:520px){.intro,.explanation{grid-template-columns:1fr;gap:24px}.intro-copy{justify-self:start;max-width:100%}header{padding-top:18px;padding-bottom:18px}.meta{max-width:120px;text-align:right}.controls{width:100%}.controls button{flex:1;padding:10px 8px;font-size:.9rem}select{width:100%}.location-picker{width:100%}.scene,.scene svg{min-height:280px}h1{font-size:4.5rem}.status-row{display:block}#badge{display:inline-block;margin-bottom:8px}.explanation{gap:22px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header><a class="brand" href="#top">Mariam Riyal</a><span class="meta">The Web in Real Time</span></header>
+<main id="top">
+<section class="intro"><div><p class="eyebrow">A waterfront shaped by the weather</p><h1>Here,<br><em>now.</em></h1></div><div class="intro-copy"><p>The same shoreline.<br>A different mood each day.</p><small>Live API requests bring current weather into an illustrated waterfront. No location permission needed.</small></div></section>
+<div class="toolbar"><div class="location-picker"><label for="location">Choose your waterfront</label><select id="location"><option value="oakville">Oakville</option><option value="burlington">Burlington</option><option value="toronto">Toronto</option></select></div><div class="controls"><button id="refresh" class="primary" type="button">Refresh weather</button><button id="units" type="button" aria-label="Switch temperature display to Fahrenheit">Show °F</button><button id="motion" type="button" aria-pressed="false">Pause motion</button></div></div>
+<section class="experience" aria-label="Current weather and responsive waterfront">
+<div id="scene" class="scene" data-weather="unknown" data-day="unknown" data-ready="false"><svg viewBox="0 0 800 490" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="sceneTitle sceneDescription"><title id="sceneTitle">Illustrated waterfront</title><desc id="sceneDescription">Waiting for current weather data.</desc><rect class="sky" width="800" height="490"/><g class="stars" fill="#f1e4bd"><circle cx="78" cy="56" r="2"/><circle cx="152" cy="112" r="1.8"/><circle cx="305" cy="55" r="2"/><circle cx="500" cy="84" r="1.5"/><circle cx="730" cy="41" r="2"/><circle cx="398" cy="128" r="1.5"/></g><circle class="sun" cx="611" cy="112" r="39"/><path class="moon" d="M628 74a39 39 0 1 0 19 72 42 42 0 0 1-19-72Z"/><g class="clouds"><path d="M70 126c-24-31 15-68 44-48 5-39 67-43 76 1 40-6 53 37 27 47Z"/><path class="cloud-two" d="M425 171c-22-21 2-51 29-43 7-37 55-38 66-4 33-3 47 28 28 47Z"/></g><path class="shore" d="M0 274Q72 236 165 261T360 264T580 260T800 251V490H0Z"/><path fill="#405d52" opacity=".65" d="M0 282 35 241 62 263 88 227 119 261 148 239 177 274 220 246 250 282Z"/><g><path fill="#e9deca" d="M335 257v-49h67v49Z"/><path fill="#705e52" d="m327 210 41-33 42 33Z"/><path fill="#c1c2b1" d="M414 259v-66h58v66Z"/><path fill="#596756" d="m405 194 37-28 38 28Z"/><path fill="#d6c9b4" d="M491 258v-43h62v43Z"/><path fill="#8d7463" d="m484 216 38-30 38 30Z"/><g class="window" fill="#769295"><path d="M348 221h12v15h-12Zm28 0h12v15h-12Zm50-15h13v18h-13Zm23 0h12v18h-12Zm54 20h13v14h-13Zm26 0h12v14h-12Z"/></g></g><path class="lake" d="M0 284Q180 272 350 290T800 282V490H0Z"/><g class="waves" fill="none" stroke-width="2"><path d="M-35 323q40-10 80 0t80 0m95 10q40-12 80 0t80 0m160-13q35-9 70 0t70 0M45 385q50-12 100 0t100 0m170 22q45-12 90 0t90 0m-260 41q50-12 100 0t100 0"/></g><path fill="#a38e6f" d="m0 393 213-51 13 15L0 421Z"/><path fill="#635d4b" d="M57 399v27h7v-29Zm131-37v28h7v-30Z"/><g class="rain" fill="none"><path d="m42 90-9 25m80 80-9 25m75-175-9 25m80 80-9 25m80-40-9 25m80 80-9 25m80-175-9 25m80 80-9 25m80-40-9 25m80 80-9 25m80-175-9 25m-580 220-9 25m80 50-9 25m80-85-9 25m80 50-9 25m80-85-9 25m80 50-9 25m80-85-9 25m80 50-9 25"/></g><g class="snow"><circle cx="55" cy="80" r="3"/><circle cx="140" cy="161" r="4"/><circle cx="221" cy="63" r="3"/><circle cx="300" cy="178" r="3"/><circle cx="390" cy="94" r="4"/><circle cx="478" cy="195" r="3"/><circle cx="560" cy="56" r="3"/><circle cx="650" cy="150" r="4"/><circle cx="745" cy="90" r="3"/><circle cx="85" cy="305" r="4"/><circle cx="234" cy="360" r="3"/><circle cx="370" cy="280" r="3"/><circle cx="540" cy="350" r="4"/><circle cx="690" cy="295" r="3"/></g><g class="fog"><rect y="198" width="800" height="24" rx="12"/><rect y="245" width="800" height="35" rx="17"/><rect y="310" width="800" height="20" rx="10"/></g></svg><span class="scene-label" id="sceneLabel">Waiting for weather</span></div>
+<div class="weather-panel" id="weatherPanel" aria-busy="true"><p class="eyebrow">Current conditions</p><h2 id="placeName">Oakville</h2><p id="temperature">—</p><p id="condition">Fetching weather…</p><dl><div><dt>Feels like</dt><dd id="feelsLike">—</dd></div><div><dt>Wind</dt><dd id="wind">—</dd></div><div><dt>Humidity</dt><dd id="humidity">—</dd></div><div><dt>Daylight</dt><dd id="daylight">—</dd></div></dl><p class="times">Conditions valid: <span id="validTime">—</span><br>Retrieved: <span id="retrievedTime">—</span></p></div>
+</section>
+<div class="status-row"><span id="badge" data-state="loading">Loading</span><p id="status" role="status" aria-live="polite">Connecting to Open-Meteo…</p></div>
+<section class="explanation"><div><h2>A scene that listens to data.</h2><p>Clear skies reveal the sun. Cloud, fog, rain, and snow change the atmosphere. At night, the moon and stars appear. Faster wind makes the illustrated water move faster.</p></div><div><h2>A fresh view, every ten minutes.</h2><p>The page requests new conditions automatically while open. Change the waterfront or refresh to request data yourself. These are modelled current conditions, not a live camera or a forecast from this illustration.</p></div></section>
+<details><summary>See the API response</summary><p>JSON returned by the most recent successful request for this location.</p><pre id="jsonOutput">No response yet.</pre><a id="apiLink" href="https://open-meteo.com/en/docs" target="_blank" rel="noopener">Open data endpoint</a></details>
+<noscript><p>JavaScript must be enabled to fetch live weather data.</p></noscript>
+</main>
+<footer><p>Made by Mariam Riyal · Educational API project</p><p>Weather data: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. Original illustrative SVG; not a location photograph.</p></footer>
+<script>
+'use strict';
+const locations = {
+  oakville: { name: 'Oakville', latitude: 43.447, longitude: -79.668 },
+  burlington: { name: 'Burlington', latitude: 43.325, longitude: -79.796 },
+  toronto: { name: 'Toronto', latitude: 43.639, longitude: -79.380 }
+};
+const codes = {0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',48:'Rime fog',51:'Light drizzle',53:'Moderate drizzle',55:'Dense drizzle',56:'Freezing drizzle',57:'Dense freezing drizzle',61:'Light rain',63:'Moderate rain',65:'Heavy rain',66:'Freezing rain',67:'Heavy freezing rain',71:'Light snowfall',73:'Moderate snowfall',75:'Heavy snowfall',77:'Snow grains',80:'Light rain showers',81:'Moderate rain showers',82:'Heavy rain showers',85:'Light snow showers',86:'Heavy snow showers',95:'Thunderstorm',96:'Thunderstorm with hail',97:'Heavy thunderstorm',99:'Thunderstorm with heavy hail'};
+const $ = id => document.getElementById(id);
+let selected = 'oakville', fahrenheit = false, controller = null, requestId = 0;
+const readings = new Map();
+const timeFormat = new Intl.DateTimeFormat('en-CA', {timeZone:'America/Toronto',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
+function endpoint(key) {
+  const location = locations[key];
+  const params = new URLSearchParams({latitude:location.latitude,longitude:location.longitude,current:'temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,is_day,wind_speed_10m',timezone:'America/Toronto',timeformat:'unixtime',temperature_unit:'celsius',wind_speed_unit:'kmh'});
+  return `https://api.open-meteo.com/v1/forecast?${params}`;
+}
+function weatherType(code) {
+  if ([95,96,97,99].includes(code)) return 'storm';
+  if ([71,73,75,77,85,86].includes(code)) return 'snow';
+  if ([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code)) return 'rain';
+  if ([45,48].includes(code)) return 'fog';
+  if ([2,3].includes(code)) return 'cloudy';
+  if ([0,1].includes(code)) return 'clear';
+  return 'unknown';
+}
+function validResponse(data) {
+  const c = data?.current;
+  return !!c && ['temperature_2m','apparent_temperature','relative_humidity_2m','wind_speed_10m','weather_code','time'].every(key => typeof c[key] === 'number' && Number.isFinite(c[key])) && [0,1].includes(c.is_day) && c.time > 0 && c.relative_humidity_2m >= 0 && c.relative_humidity_2m <= 100 && c.wind_speed_10m >= 0;
+}
+function temperature(value) { return `${Math.round(fahrenheit ? value * 9 / 5 + 32 : value)}°${fahrenheit ? 'F' : 'C'}`; }
+function status(state, label, message) {
+  $('badge').dataset.state = state; $('badge').textContent = label; $('status').textContent = message;
+}
+function render() {
+  const reading = readings.get(selected);
+  $('placeName').textContent = locations[selected].name;
+  $('apiLink').href = endpoint(selected);
+  if (!reading) {
+    ['temperature','feelsLike','wind','humidity','daylight','validTime','retrievedTime'].forEach(id => $(id).textContent = '—');
+    $('condition').textContent = 'No current data'; $('jsonOutput').textContent = 'No response yet.';
+    $('scene').dataset.weather = 'unknown'; $('scene').dataset.day = 'unknown'; $('scene').dataset.ready = 'false';
+    $('sceneDescription').textContent = 'Neutral illustration. Current weather is unavailable.';
+    $('sceneLabel').textContent = 'Waiting for weather'; return;
+  }
+  const c = reading.data.current;
+  const condition = codes[c.weather_code] || 'Unclassified conditions';
+  $('temperature').textContent = temperature(c.temperature_2m);
+  $('feelsLike').textContent = temperature(c.apparent_temperature);
+  $('wind').textContent = `${Math.round(c.wind_speed_10m)} km/h`;
+  $('humidity').textContent = `${Math.round(c.relative_humidity_2m)}%`;
+  $('daylight').textContent = c.is_day ? 'Day' : 'Night';
+  $('condition').textContent = condition;
+  $('validTime').textContent = timeFormat.format(new Date(c.time * 1000));
+  $('retrievedTime').textContent = timeFormat.format(new Date(reading.retrieved));
+  $('jsonOutput').textContent = JSON.stringify(reading.data, null, 2);
+  const scene = $('scene');
+  scene.dataset.weather = weatherType(c.weather_code); scene.dataset.day = c.is_day ? 'day' : 'night'; scene.dataset.ready = 'true';
+  scene.style.setProperty('--speed', `${Math.max(1.2, 6 - Math.min(c.wind_speed_10m, 60) / 12)}s`);
+  $('sceneLabel').textContent = `${locations[selected].name} · ${condition}`;
+  $('sceneDescription').textContent = `Illustrated ${locations[selected].name} waterfront: ${condition.toLowerCase()}, ${c.is_day ? 'daytime' : 'nighttime'}, wind ${Math.round(c.wind_speed_10m)} kilometres per hour. The water animation speed follows wind speed.`;
+}
+async function loadWeather() {
+  if (controller) controller.abort();
+  controller = new AbortController();
+  const activeController = controller, id = ++requestId, key = selected;
+  const timeout = setTimeout(() => activeController.abort(), 15000);
+  $('refresh').disabled = true; $('refresh').textContent = 'Updating…'; $('weatherPanel').setAttribute('aria-busy','true');
+  status('loading','Loading',`Requesting current conditions for ${locations[key].name}…`);
+  try {
+    // Fetch returns a Response. Parse JSON before using its weather values in the DOM.
+    const response = await fetch(endpoint(key), {signal:activeController.signal,cache:'no-store'});
+    if (!response.ok) throw new Error(`Weather API returned HTTP ${response.status}`);
+    const data = await response.json();
+    if (!validResponse(data)) throw new Error('Weather response is missing valid current conditions');
+    if (id !== requestId || key !== selected) return;
+    readings.set(key, {data,retrieved:Date.now()}); render();
+    const stale = Date.now() - data.current.time * 1000 > 60 * 60 * 1000;
+    status(stale?'error':'success',stale?'Older data':'Updated',stale?'The provider returned older conditions. Check the valid time above.':'Current modelled conditions received. Refreshes every ten minutes.');
+  } catch (error) {
+    if (id !== requestId || key !== selected) return;
+    render();
+    if (readings.has(key)) status('error','Not updated','Refresh failed. Showing the last successful reading for this location; check its timestamp.');
+    else status('error','Unavailable','Weather could not be loaded. Check your connection, then use Refresh weather to retry. No sample values are being shown.');
+  } finally {
+    clearTimeout(timeout);
+    if (id === requestId) { $('refresh').disabled = false; $('refresh').textContent = 'Refresh weather'; $('weatherPanel').setAttribute('aria-busy','false'); }
+  }
+}
+$('location').addEventListener('change', event => {selected = event.target.value;render();loadWeather();});
+$('refresh').addEventListener('click',loadWeather);
+$('units').addEventListener('click', () => {fahrenheit = !fahrenheit;$('units').textContent = fahrenheit?'Show °C':'Show °F';$('units').setAttribute('aria-label',`Switch temperature display to ${fahrenheit?'Celsius':'Fahrenheit'}`);render();});
+$('motion').addEventListener('click', () => {const paused = $('scene').classList.toggle('paused');$('motion').setAttribute('aria-pressed',String(paused));$('motion').textContent = paused?'Resume motion':'Pause motion';});
+// No push socket: this is a periodic live request, not second-by-second observation.
+setInterval(() => { if (!document.hidden && !$('refresh').disabled) loadWeather(); }, 10 * 60 * 1000);
+render();loadWeather();
+</script>
+</body>
+</html>
